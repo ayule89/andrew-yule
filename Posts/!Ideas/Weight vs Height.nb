@@ -1,0 +1,458 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     25810,        450]
+NotebookOptionsPosition[     24798,        424]
+NotebookOutlinePosition[     25191,        440]
+CellTagsIndexPosition[     25148,        437]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Get", "[", "\"\<Alex`\>\"", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.831763917882207*^9, 3.83176392198847*^9}},
+ CellLabel->"In[24]:=",ExpressionUUID->"f3ac56d4-067c-4d40-8b6f-5d0c8d0f82de"],
+
+Cell[BoxData["\<\"Alex version 2021.6.1 (dependency flag = All)\"\>"], "Echo",
+ CellChangeTimes->{
+  3.831763950462276*^9},ExpressionUUID->"18f917f8-5153-4780-9e7d-\
+73090048e8fa"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"data", "=", 
+  RowBox[{
+   RowBox[{
+   "Import", "[", 
+    "\"\<https://storage.googleapis.com/kagglesdsdata/datasets/34879/46976/\
+500_Person_Gender_Height_Weight_Index.csv?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-\
+Goog-Credential=gcp-kaggle-com%40kaggle-161607.iam.gserviceaccount.com%\
+2F20210604%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20210604T124018Z&X-\
+Goog-Expires=259199&X-Goog-SignedHeaders=host&X-Goog-Signature=\
+9d589ca1598e8d998632f31b28c2a293d7b1b95de65f912c54d00ab9f23bce43bf69e560e987f1\
+27b17df4f06be6a0dc8b0a49d0e070f95c746b44bbe711c07b65a46a4fb334bab6a256eb4bea0b\
+eea0ed1db4e25a3432d009ee966993f2e1ac9e1bc35f4247b7cd1bee1811996b748a7f4e067722\
+8184d1959cdbbb8115edd743c33922c2a45ac0f5a98bf7c74d4936c997c5b5d206bd049d4d5aa4\
+6dd7beea8f7a6095d6974f051167d4fc918191f2f61c84978b3f130f06336490d251e78312890e\
+d9617423043d42aaa067508803a87b89449392da835f392c67eb2d98dcf91b8f52606e820c7dcb\
+cdcb9308f8d27389fca0c187af4701d3797511767e40\>\"", "]"}], "//", 
+   "Iconize"}]}]], "Input",
+ CellChangeTimes->{{3.831799233183812*^9, 3.831799237627883*^9}, {
+  3.831799274446138*^9, 3.8317992767871532`*^9}},
+ CellLabel->"In[29]:=",ExpressionUUID->"352564da-3d77-41bf-99e5-325989bec6de"],
+
+Cell[BoxData[
+ InterpretationBox[
+  DynamicModuleBox[{Typeset`open = False}, 
+   TemplateBox[{"List", "ListIcon", 
+     GridBox[{{
+        RowBox[{
+          TagBox["\"Head: \"", "IconizedLabel"], "\[InvisibleSpace]", 
+          TagBox["List", "IconizedItem"]}]}, {
+        RowBox[{
+          TagBox["\"Dimensions: \"", "IconizedLabel"], "\[InvisibleSpace]", 
+          TagBox[
+           RowBox[{"{", 
+             RowBox[{"501", ",", "4"}], "}"}], "IconizedItem"]}]}, {
+        RowBox[{
+          TagBox["\"Byte count: \"", "IconizedLabel"], "\[InvisibleSpace]", 
+          TagBox["80296", "IconizedItem"]}]}}, 
+      GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+      "Column", 
+      GridBoxItemSize -> {
+       "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+     Dynamic[Typeset`open]},
+    "IconizedObject"]],
+  {{"Gender", "Height", "Weight", "Index"}, {"Male", 174, 96, 4}, {
+   "Male", 189, 87, 2}, {"Female", 185, 110, 4}, {"Female", 195, 104, 3}, {
+   "Male", 149, 61, 3}, {"Male", 189, 104, 3}, {"Male", 147, 92, 5}, {
+   "Male", 154, 111, 5}, {"Male", 174, 90, 3}, {"Female", 169, 103, 4}, {
+   "Male", 195, 81, 2}, {"Female", 159, 80, 4}, {"Female", 192, 101, 3}, {
+   "Male", 155, 51, 2}, {"Male", 191, 79, 2}, {"Female", 153, 107, 5}, {
+   "Female", 157, 110, 5}, {"Male", 140, 129, 5}, {"Male", 144, 145, 5}, {
+   "Male", 172, 139, 5}, {"Male", 157, 110, 5}, {"Female", 153, 149, 5}, {
+   "Female", 169, 97, 4}, {"Male", 185, 139, 5}, {"Female", 172, 67, 2}, {
+   "Female", 151, 64, 3}, {"Male", 190, 95, 3}, {"Male", 187, 62, 1}, {
+   "Female", 163, 159, 5}, {"Male", 179, 152, 5}, {"Male", 153, 121, 5}, {
+   "Male", 178, 52, 1}, {"Female", 195, 65, 1}, {"Female", 160, 131, 5}, {
+   "Female", 157, 153, 5}, {"Female", 189, 132, 4}, {"Female", 197, 114, 3}, {
+   "Male", 144, 80, 4}, {"Female", 171, 152, 5}, {"Female", 185, 81, 2}, {
+   "Female", 175, 120, 4}, {"Female", 149, 108, 5}, {"Male", 157, 56, 2}, {
+   "Male", 161, 118, 5}, {"Female", 182, 126, 4}, {"Male", 185, 76, 2}, {
+   "Female", 188, 122, 4}, {"Male", 181, 111, 4}, {"Male", 161, 72, 3}, {
+   "Male", 140, 152, 5}, {"Female", 168, 135, 5}, {"Female", 176, 54, 1}, {
+   "Male", 163, 110, 5}, {"Male", 172, 105, 4}, {"Male", 196, 116, 4}, {
+   "Female", 187, 89, 3}, {"Male", 172, 92, 4}, {"Male", 178, 127, 5}, {
+   "Female", 164, 70, 3}, {"Male", 143, 88, 5}, {"Female", 191, 54, 0}, {
+   "Female", 141, 143, 5}, {"Male", 193, 54, 0}, {"Male", 190, 83, 2}, {
+   "Male", 175, 135, 5}, {"Female", 179, 158, 5}, {"Female", 172, 96, 4}, {
+   "Female", 168, 59, 2}, {"Female", 164, 82, 4}, {"Female", 194, 136, 4}, {
+   "Female", 153, 51, 2}, {"Male", 178, 117, 4}, {"Male", 141, 80, 5}, {
+   "Male", 180, 75, 2}, {"Female", 185, 100, 3}, {"Female", 197, 154, 4}, {
+   "Male", 165, 104, 4}, {"Female", 168, 90, 4}, {"Female", 176, 122, 4}, {
+   "Male", 181, 51, 0}, {"Male", 164, 75, 3}, {"Female", 166, 140, 5}, {
+   "Female", 190, 105, 3}, {"Male", 186, 118, 4}, {"Male", 168, 123, 5}, {
+   "Male", 198, 50, 0}, {"Female", 175, 141, 5}, {"Male", 145, 117, 5}, {
+   "Female", 159, 104, 5}, {"Female", 185, 140, 5}, {"Female", 178, 154, 5}, {
+   "Female", 183, 96, 3}, {"Female", 194, 111, 3}, {"Male", 177, 61, 2}, {
+   "Male", 197, 119, 4}, {"Female", 170, 156, 5}, {"Male", 142, 69, 4}, {
+   "Male", 160, 139, 5}, {"Male", 195, 69, 1}, {"Female", 190, 50, 0}, {
+   "Male", 199, 156, 4}, {"Male", 154, 105, 5}, {"Male", 161, 155, 5}, {
+   "Female", 198, 145, 4}, {"Female", 192, 140, 4}, {"Male", 195, 126, 4}, {
+   "Male", 166, 160, 5}, {"Male", 159, 154, 5}, {"Female", 181, 106, 4}, {
+   "Male", 149, 66, 3}, {"Female", 150, 70, 4}, {"Female", 146, 157, 5}, {
+   "Male", 190, 135, 4}, {"Female", 192, 90, 2}, {"Female", 177, 96, 4}, {
+   "Male", 148, 60, 3}, {"Female", 165, 57, 2}, {"Female", 146, 104, 5}, {
+   "Male", 144, 108, 5}, {"Female", 176, 156, 5}, {"Female", 168, 87, 4}, {
+   "Male", 187, 122, 4}, {"Male", 187, 138, 4}, {"Female", 184, 160, 5}, {
+   "Female", 158, 149, 5}, {"Male", 158, 96, 4}, {"Male", 194, 115, 4}, {
+   "Female", 145, 79, 4}, {"Male", 182, 151, 5}, {"Male", 154, 54, 2}, {
+   "Female", 168, 139, 5}, {"Female", 187, 70, 2}, {"Female", 158, 153, 5}, {
+   "Female", 167, 110, 4}, {"Female", 171, 155, 5}, {"Female", 183, 150, 5}, {
+   "Female", 190, 156, 5}, {"Male", 194, 108, 3}, {"Male", 171, 147, 5}, {
+   "Male", 159, 124, 5}, {"Female", 169, 54, 2}, {"Female", 167, 85, 4}, {
+   "Male", 180, 149, 5}, {"Male", 163, 123, 5}, {"Male", 140, 79, 5}, {
+   "Male", 197, 125, 4}, {"Male", 194, 106, 3}, {"Female", 140, 146, 5}, {
+   "Male", 195, 98, 3}, {"Female", 168, 115, 3}, {"Female", 196, 50, 0}, {
+   "Male", 140, 52, 3}, {"Female", 150, 60, 3}, {"Female", 168, 140, 5}, {
+   "Female", 155, 111, 5}, {"Female", 179, 103, 4}, {"Female", 182, 84, 3}, {
+   "Male", 168, 160, 5}, {"Female", 187, 102, 3}, {"Male", 181, 105, 4}, {
+   "Male", 199, 99, 2}, {"Female", 184, 76, 2}, {"Male", 192, 101, 3}, {
+   "Female", 182, 143, 5}, {"Female", 172, 111, 4}, {"Male", 181, 78, 2}, {
+   "Male", 176, 109, 4}, {"Female", 156, 106, 5}, {"Female", 151, 67, 3}, {
+   "Female", 188, 80, 2}, {"Male", 187, 136, 4}, {"Male", 174, 138, 5}, {
+   "Male", 167, 151, 5}, {"Female", 196, 131, 4}, {"Male", 197, 149, 4}, {
+   "Female", 185, 119, 4}, {"Female", 170, 102, 4}, {"Female", 181, 94, 3}, {
+   "Female", 166, 126, 5}, {"Male", 188, 100, 3}, {"Female", 162, 74, 3}, {
+   "Male", 177, 117, 4}, {"Male", 162, 97, 4}, {"Male", 180, 73, 2}, {
+   "Female", 192, 108, 3}, {"Male", 165, 80, 3}, {"Female", 167, 135, 5}, {
+   "Female", 182, 84, 3}, {"Female", 161, 134, 5}, {"Male", 158, 95, 4}, {
+   "Male", 141, 85, 5}, {"Male", 154, 100, 5}, {"Male", 165, 105, 4}, {
+   "Female", 142, 137, 5}, {"Male", 141, 94, 5}, {"Male", 145, 108, 5}, {
+   "Male", 157, 74, 4}, {"Female", 177, 117, 4}, {"Female", 166, 144, 5}, {
+   "Male", 193, 151, 5}, {"Male", 184, 57, 1}, {"Male", 179, 93, 3}, {
+   "Female", 156, 89, 4}, {"Male", 182, 104, 4}, {"Male", 145, 160, 5}, {
+   "Female", 150, 87, 4}, {"Male", 145, 99, 5}, {"Female", 196, 122, 4}, {
+   "Male", 191, 96, 3}, {"Female", 148, 67, 4}, {"Female", 150, 84, 4}, {
+   "Male", 148, 155, 5}, {"Female", 153, 146, 5}, {"Female", 196, 159, 5}, {
+   "Female", 185, 52, 0}, {"Female", 171, 131, 5}, {"Female", 143, 118, 5}, {
+   "Female", 142, 86, 5}, {"Female", 141, 126, 5}, {"Male", 159, 109, 5}, {
+   "Female", 173, 82, 2}, {"Male", 183, 138, 5}, {"Female", 152, 90, 4}, {
+   "Male", 178, 140, 5}, {"Male", 188, 54, 0}, {"Female", 155, 144, 5}, {
+   "Male", 166, 70, 3}, {"Male", 188, 123, 4}, {"Female", 171, 120, 5}, {
+   "Male", 179, 130, 5}, {"Female", 186, 137, 4}, {"Female", 153, 78, 2}, {
+   "Female", 184, 86, 3}, {"Female", 177, 81, 3}, {"Male", 145, 78, 4}, {
+   "Male", 170, 81, 3}, {"Male", 181, 141, 5}, {"Male", 165, 155, 5}, {
+   "Female", 174, 65, 2}, {"Female", 146, 110, 5}, {"Male", 178, 85, 3}, {
+   "Male", 166, 61, 2}, {"Male", 191, 62, 1}, {"Female", 177, 155, 5}, {
+   "Female", 183, 50, 0}, {"Male", 151, 114, 5}, {"Male", 182, 98, 3}, {
+   "Female", 142, 159, 5}, {"Female", 188, 90, 3}, {"Male", 161, 89, 4}, {
+   "Male", 153, 70, 3}, {"Male", 140, 143, 5}, {"Male", 169, 141, 5}, {
+   "Female", 162, 159, 5}, {"Male", 183, 147, 5}, {"Female", 162, 58, 2}, {
+   "Female", 172, 109, 4}, {"Female", 150, 119, 5}, {"Female", 169, 145, 5}, {
+   "Female", 184, 132, 4}, {"Male", 159, 104, 5}, {"Male", 163, 131, 5}, {
+   "Male", 156, 137, 5}, {"Female", 157, 52, 2}, {"Male", 147, 84, 4}, {
+   "Male", 141, 86, 5}, {"Male", 173, 139, 5}, {"Male", 154, 145, 5}, {
+   "Male", 168, 148, 5}, {"Male", 168, 50, 1}, {"Male", 145, 130, 5}, {
+   "Male", 152, 103, 5}, {"Female", 187, 121, 4}, {"Female", 163, 57, 0}, {
+   "Male", 178, 83, 3}, {"Female", 187, 94, 3}, {"Female", 179, 114, 4}, {
+   "Male", 190, 80, 2}, {"Male", 172, 75, 3}, {"Male", 188, 57, 1}, {
+   "Male", 193, 65, 1}, {"Female", 147, 126, 5}, {"Female", 147, 94, 5}, {
+   "Male", 166, 107, 4}, {"Female", 192, 139, 4}, {"Male", 181, 139, 4}, {
+   "Male", 150, 74, 4}, {"Male", 178, 160, 5}, {"Female", 156, 52, 2}, {
+   "Male", 149, 100, 5}, {"Male", 156, 74, 4}, {"Male", 183, 105, 3}, {
+   "Female", 162, 68, 3}, {"Female", 165, 83, 4}, {"Female", 168, 143, 5}, {
+   "Male", 160, 156, 5}, {"Female", 169, 88, 2}, {"Female", 140, 76, 4}, {
+   "Female", 187, 92, 3}, {"Male", 151, 82, 4}, {"Female", 186, 140, 5}, {
+   "Male", 182, 108, 4}, {"Male", 188, 81, 2}, {"Male", 179, 110, 4}, {
+   "Female", 156, 126, 5}, {"Male", 188, 114, 4}, {"Male", 183, 153, 5}, {
+   "Male", 144, 88, 5}, {"Male", 196, 69, 1}, {"Male", 171, 141, 5}, {
+   "Male", 171, 147, 5}, {"Female", 180, 156, 5}, {"Male", 191, 146, 5}, {
+   "Female", 179, 67, 2}, {"Female", 180, 60, 2}, {"Female", 154, 132, 5}, {
+   "Male", 188, 99, 3}, {"Male", 142, 135, 5}, {"Male", 170, 95, 4}, {
+   "Male", 152, 141, 5}, {"Female", 190, 118, 4}, {"Female", 181, 111, 4}, {
+   "Male", 153, 104, 5}, {"Male", 187, 140, 5}, {"Female", 144, 66, 4}, {
+   "Female", 148, 54, 2}, {"Female", 199, 92, 2}, {"Female", 167, 85, 4}, {
+   "Female", 164, 71, 3}, {"Female", 185, 102, 3}, {"Female", 164, 160, 5}, {
+   "Male", 142, 71, 4}, {"Male", 165, 68, 2}, {"Female", 172, 62, 2}, {
+   "Female", 157, 56, 2}, {"Male", 155, 57, 2}, {"Female", 167, 153, 5}, {
+   "Female", 164, 126, 5}, {"Female", 189, 125, 4}, {"Female", 161, 145, 5}, {
+   "Female", 155, 71, 3}, {"Female", 171, 118, 4}, {"Female", 154, 92, 4}, {
+   "Male", 179, 83, 3}, {"Male", 170, 115, 4}, {"Female", 184, 106, 4}, {
+   "Female", 191, 68, 2}, {"Male", 162, 58, 2}, {"Male", 178, 138, 5}, {
+   "Female", 157, 60, 2}, {"Male", 184, 83, 2}, {"Male", 197, 88, 2}, {
+   "Female", 160, 51, 2}, {"Male", 184, 153, 5}, {"Male", 190, 50, 0}, {
+   "Male", 174, 90, 3}, {"Female", 189, 124, 4}, {"Female", 186, 143, 5}, {
+   "Female", 180, 58, 1}, {"Female", 186, 148, 4}, {"Female", 193, 61, 1}, {
+   "Male", 161, 103, 4}, {"Female", 151, 158, 5}, {"Female", 195, 147, 4}, {
+   "Female", 184, 152, 5}, {"Male", 141, 80, 5}, {"Female", 185, 94, 3}, {
+   "Female", 186, 127, 4}, {"Male", 142, 131, 5}, {"Female", 147, 67, 4}, {
+   "Male", 151, 62, 3}, {"Female", 160, 124, 5}, {"Male", 185, 60, 1}, {
+   "Female", 163, 63, 2}, {"Male", 174, 95, 4}, {"Female", 150, 144, 5}, {
+   "Male", 142, 91, 5}, {"Male", 178, 142, 5}, {"Female", 154, 96, 5}, {
+   "Male", 176, 87, 3}, {"Male", 159, 120, 5}, {"Male", 191, 62, 1}, {
+   "Male", 177, 117, 4}, {"Male", 151, 154, 5}, {"Female", 182, 149, 5}, {
+   "Female", 197, 72, 2}, {"Male", 146, 138, 5}, {"Female", 160, 83, 4}, {
+   "Female", 157, 66, 3}, {"Female", 150, 50, 2}, {"Female", 167, 58, 2}, {
+   "Female", 180, 70, 2}, {"Female", 183, 76, 2}, {"Female", 183, 87, 3}, {
+   "Female", 152, 154, 5}, {"Female", 164, 71, 3}, {"Male", 187, 96, 3}, {
+   "Male", 169, 136, 5}, {"Female", 149, 61, 3}, {"Male", 163, 137, 5}, {
+   "Female", 195, 104, 3}, {"Male", 174, 107, 4}, {"Male", 182, 70, 2}, {
+   "Male", 169, 110, 4}, {"Male", 193, 130, 4}, {"Male", 148, 141, 5}, {
+   "Male", 186, 68, 2}, {"Male", 165, 143, 5}, {"Female", 146, 123, 5}, {
+   "Female", 166, 133, 5}, {"Male", 179, 56, 1}, {"Female", 177, 101, 4}, {
+   "Male", 181, 154, 5}, {"Female", 161, 154, 5}, {"Female", 157, 103, 5}, {
+   "Female", 169, 98, 4}, {"Female", 152, 114, 5}, {"Female", 162, 64, 2}, {
+   "Male", 162, 130, 5}, {"Female", 177, 61, 2}, {"Female", 195, 61, 1}, {
+   "Male", 140, 146, 5}, {"Female", 186, 146, 5}, {"Female", 178, 107, 4}, {
+   "Male", 174, 54, 1}, {"Female", 180, 59, 1}, {"Male", 188, 141, 4}, {
+   "Female", 187, 130, 4}, {"Female", 153, 77, 4}, {"Female", 165, 95, 4}, {
+   "Female", 178, 79, 2}, {"Female", 163, 154, 5}, {"Female", 150, 97, 5}, {
+   "Male", 179, 127, 4}, {"Male", 165, 62, 2}, {"Male", 168, 158, 5}, {
+   "Female", 153, 133, 5}, {"Male", 184, 157, 5}, {"Male", 188, 65, 1}, {
+   "Female", 166, 153, 5}, {"Female", 172, 116, 4}, {"Male", 182, 73, 2}, {
+   "Male", 143, 149, 5}, {"Male", 152, 146, 5}, {"Female", 186, 128, 4}, {
+   "Male", 159, 140, 5}, {"Male", 146, 70, 4}, {"Female", 176, 121, 4}, {
+   "Female", 146, 101, 5}, {"Male", 159, 145, 5}, {"Male", 162, 157, 5}, {
+   "Female", 172, 90, 4}, {"Female", 169, 121, 5}, {"Male", 182, 50, 0}, {
+   "Female", 183, 79, 2}, {"Male", 176, 77, 2}, {"Female", 188, 128, 4}, {
+   "Female", 175, 83, 2}, {"Male", 154, 81, 4}, {"Female", 184, 147, 5}, {
+   "Male", 179, 123, 4}, {"Male", 152, 132, 5}, {"Male", 179, 56, 1}, {
+   "Female", 145, 141, 5}, {"Female", 181, 80, 2}, {"Male", 158, 127, 5}, {
+   "Female", 188, 99, 3}, {"Male", 145, 142, 5}, {"Male", 161, 115, 5}, {
+   "Male", 198, 109, 3}, {"Male", 147, 142, 5}, {"Male", 154, 112, 5}, {
+   "Female", 178, 65, 2}, {"Male", 195, 153, 5}, {"Female", 167, 79, 3}, {
+   "Male", 183, 131, 4}, {"Female", 164, 142, 5}, {"Male", 167, 64, 2}, {
+   "Female", 151, 55, 2}, {"Female", 147, 107, 5}, {"Female", 155, 115, 5}, {
+   "Female", 172, 108, 4}, {"Female", 142, 86, 5}, {"Male", 146, 85, 4}, {
+   "Female", 188, 115, 4}, {"Male", 173, 111, 4}, {"Female", 160, 109, 5}, {
+   "Male", 187, 80, 2}, {"Male", 198, 136, 4}, {"Female", 179, 150, 5}, {
+   "Female", 164, 59, 2}, {"Female", 146, 147, 5}, {"Female", 198, 50, 0}, {
+   "Female", 170, 53, 1}, {"Male", 152, 98, 5}, {"Female", 150, 153, 5}, {
+   "Female", 184, 121, 4}, {"Female", 141, 136, 5}, {"Male", 150, 95, 5}, {
+   "Male", 173, 131, 5}},
+  SelectWithContents->True,
+  Selectable->False]], "Output",
+ CellChangeTimes->{3.831799239286498*^9, 3.831799277404541*^9},
+ CellLabel->"Out[29]=",ExpressionUUID->"45c3e1e9-1ba0-4366-b7ea-108b8eaacc78"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"data", "=", 
+   RowBox[{
+    RowBox[{
+     InterpretationBox[
+      DynamicModuleBox[{Typeset`open = False}, 
+       TemplateBox[{"String", "StringIcon", 
+         GridBox[{{
+            RowBox[{
+              TagBox["\"Head: \"", "IconizedLabel"], "\[InvisibleSpace]", 
+              TagBox["String", "IconizedItem"]}]}, {
+            RowBox[{
+              TagBox["\"String length: \"", "IconizedLabel"], 
+              "\[InvisibleSpace]", 
+              TagBox["3290", "IconizedItem"]}]}, {
+            RowBox[{
+              TagBox["\"Byte count: \"", "IconizedLabel"], 
+              "\[InvisibleSpace]", 
+              TagBox["3328", "IconizedItem"]}]}}, 
+          GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+          "Column", 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+         Dynamic[Typeset`open]},
+        "IconizedObject"]],
+      "1\t65.78\t112.99\n2\t71.52\t136.49\n3\t69.40\t153.03\n4\t68.22\t142.34\
+\n5\t67.79\t144.30\n6\t68.70\t123.30\n7\t69.80\t141.49\n8\t70.01\t136.46\n9\t\
+67.90\t112.37\n10\t66.78\t120.67\n11\t66.49\t127.45\n12\t67.62\t114.14\n13\t\
+68.30\t125.61\n14\t67.12\t122.46\n15\t68.28\t116.09\n16\t71.09\t140.00\n17\t\
+66.46\t129.50\n18\t68.65\t142.97\n19\t71.23\t137.90\n20\t67.13\t124.04\n21\t\
+67.83\t141.28\n22\t68.88\t143.54\n23\t63.48\t97.90\n24\t68.42\t129.50\n25\t\
+67.63\t141.85\n26\t67.21\t129.72\n27\t70.84\t142.42\n28\t67.49\t131.55\n29\t\
+66.53\t108.33\n30\t65.44\t113.89\n31\t69.52\t103.30\n32\t65.81\t120.75\n33\t\
+67.82\t125.79\n34\t70.60\t136.22\n35\t71.80\t140.10\n36\t69.21\t128.75\n37\t\
+66.80\t141.80\n38\t67.66\t121.23\n39\t67.81\t131.35\n40\t64.05\t106.71\n41\t\
+68.57\t124.36\n42\t65.18\t124.86\n43\t69.66\t139.67\n44\t67.97\t137.37\n45\t\
+65.98\t106.45\n46\t68.67\t128.76\n47\t66.88\t145.68\n48\t67.70\t116.82\n49\t\
+69.82\t143.62\n50\t69.09\t134.93\n51\t69.91\t147.02\n52\t67.33\t126.33\n53\t\
+70.27\t125.48\n54\t69.10\t115.71\n55\t65.38\t123.49\n56\t70.18\t147.89\n57\t\
+70.41\t155.90\n58\t66.54\t128.07\n59\t66.36\t119.37\n60\t67.54\t133.81\n61\t\
+66.50\t128.73\n62\t69.00\t137.55\n63\t68.30\t129.76\n64\t67.01\t128.82\n65\t\
+70.81\t135.32\n66\t68.22\t109.61\n67\t69.06\t142.47\n68\t67.73\t132.75\n69\t\
+67.22\t103.53\n70\t67.37\t124.73\n71\t65.27\t129.31\n72\t70.84\t134.02\n73\t\
+69.92\t140.40\n74\t64.29\t102.84\n75\t68.25\t128.52\n76\t66.36\t120.30\n77\t\
+68.36\t138.60\n78\t65.48\t132.96\n79\t69.72\t115.62\n80\t67.73\t122.52\n81\t\
+68.64\t134.63\n82\t66.78\t121.90\n83\t70.05\t155.38\n84\t66.28\t128.94\n85\t\
+69.20\t129.10\n86\t69.13\t139.47\n87\t67.36\t140.89\n88\t70.09\t131.59\n89\t\
+70.18\t121.12\n90\t68.23\t131.51\n91\t68.13\t136.55\n92\t70.24\t141.49\n93\t\
+71.49\t140.61\n94\t69.20\t112.14\n95\t70.06\t133.46\n96\t70.56\t131.80\n97\t\
+66.29\t120.03\n98\t63.43\t123.10\n99\t66.77\t128.14\n100\t68.89\t115.48\n101\t\
+64.87\t102.09\n102\t67.09\t130.35\n103\t68.35\t134.18\n104\t65.61\t98.64\n105\
+\t67.76\t114.56\n106\t68.02\t123.49\n107\t67.66\t123.05\n108\t66.31\t126.48\n\
+109\t69.44\t128.42\n110\t63.84\t127.19\n111\t67.72\t122.06\n112\t70.05\t\
+127.61\n113\t70.19\t131.64\n114\t65.95\t111.90\n115\t70.01\t122.04\n116\t\
+68.61\t128.55\n117\t68.81\t132.68\n118\t69.76\t136.06\n119\t65.46\t115.94\n\
+120\t68.83\t136.90\n121\t65.80\t119.88\n122\t67.21\t109.01\n123\t69.42\t\
+128.27\n124\t68.94\t135.29\n125\t67.94\t106.86\n126\t65.63\t123.29\n127\t\
+66.50\t109.51\n128\t67.93\t119.31\n129\t68.89\t140.24\n130\t70.24\t133.98\n\
+131\t68.27\t132.58\n132\t71.23\t130.70\n133\t69.10\t115.56\n134\t64.40\t\
+123.79\n135\t71.10\t128.14\n136\t68.22\t135.96\n137\t65.92\t116.63\n138\t\
+67.44\t126.82\n139\t73.90\t151.39\n140\t69.98\t130.40\n141\t69.52\t136.21\n\
+142\t65.18\t113.40\n143\t68.01\t125.33\n144\t68.34\t127.58\n145\t65.18\t\
+107.16\n146\t68.26\t116.46\n147\t68.57\t133.84\n148\t64.50\t112.89\n149\t\
+68.71\t130.76\n150\t68.89\t137.76\n151\t69.54\t125.40\n152\t67.40\t138.47\n\
+153\t66.48\t120.82\n154\t66.01\t140.15\n155\t72.44\t136.74\n156\t64.13\t\
+106.11\n157\t70.98\t158.96\n158\t67.50\t108.79\n159\t72.02\t138.78\n160\t\
+65.31\t115.91\n161\t67.08\t146.29\n162\t64.39\t109.88\n163\t69.37\t139.05\n\
+164\t68.38\t119.90\n165\t65.31\t128.31\n166\t67.14\t127.24\n167\t68.39\t\
+115.23\n168\t66.29\t124.80\n169\t67.19\t126.95\n170\t65.99\t111.27\n171\t\
+69.43\t122.61\n172\t67.97\t124.21\n173\t67.76\t124.65\n174\t65.28\t119.52\n\
+175\t73.83\t139.30\n176\t66.81\t104.83\n177\t66.89\t123.04\n178\t65.74\t\
+118.89\n179\t65.98\t121.49\n180\t66.58\t119.25\n181\t67.11\t135.02\n182\t\
+65.87\t116.23\n183\t66.78\t109.17\n184\t68.74\t124.22\n185\t66.23\t141.16\n\
+186\t65.96\t129.15\n187\t68.58\t127.87\n188\t66.59\t120.92\n189\t66.97\t\
+127.65\n190\t68.08\t101.47\n191\t70.19\t144.99\n192\t65.52\t110.95\n193\t\
+67.46\t132.86\n194\t67.41\t146.34\n195\t69.66\t145.59\n196\t65.80\t120.84\n\
+197\t66.11\t115.78\n198\t68.24\t128.30\n199\t68.02\t127.47\n200\t71.39\t\
+127.88\n",
+      SelectWithContents->True,
+      Selectable->False], 
+     RowBox[{"(*", 
+      RowBox[{"{", 
+       RowBox[{"index", ",", " ", "height", ",", " ", "weight"}], "}"}], 
+      "*)"}], "//", "\n", "\t", "importStringTSV"}], "//", "\n", "\t", 
+    RowBox[{"slice", "[", 
+     RowBox[{"All", ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "3"}], "}"}]}], "]"}]}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.8317638989083433`*^9, 3.831763913148202*^9}, {
+  3.831763945260049*^9, 3.831763985482519*^9}},
+ CellLabel->"In[26]:=",ExpressionUUID->"f356c099-a11a-41e1-94ea-4f0ab3bea7c7"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListPlot", "[", "data", "]"}]], "Input",
+ CellChangeTimes->{{3.831763986532034*^9, 3.831763990059227*^9}},
+ CellLabel->"In[27]:=",ExpressionUUID->"cefa1ec8-de28-4f2a-93d5-fb6a184d4b30"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, 
+   {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.009166666666666668], 
+    AbsoluteThickness[1.6], PointBox[CompressedData["
+1:eJxVVmtsVEUYXapoS2KhCrYSLBgxtr6hNjSGxkmMgoJ2Zona3b2Pudsoosa2
+PCKsVYm1qYnEBghBEVGsVf+IIZWw+EBTUmlIKSqaqgFKNaZiKxEQpUqIe+ec
+Oxs3aW7vnZlvzved852Za9KN8UcKYrFYX+4vfMaz5W2jzVJ09JytcO50xHBm
+6o4Fw0osDP+ZHIgtr+V+CSUqndyMWQ0iN5iZWqzEM+G0A4HYl1vWcVpiXlFa
+HOzP/W5Soir8HfbwXMF4HwaiuXbSYOdaJWa2japsMeOPS4yXOsLg2SkR/wYP
+uN6UiHvEx7wRCTwvOYh/hRKDnU21k5ZyfL8U4TZNb3iIV6LEXzmYPRNdPHuV
+iIW/tQHnSbzfpoGnkvGGAuAcUNh/fiDCcKpPIu8CX4TD5WeJ532O1yjU8RTj
+f1aHuGvqkdd0Zfcz83+VyOMTzj8osf88Dby7FL8HqMcQ692skd92CRzTUsIx
+E4hnNfkMIj4S4p1c2MEVUb6eCOFk/mQ+y33xaPh7l/lfGmDdGa5vJb77ib9M
+43s38ewJRDhc+5tE3R7wsN8Z5vcE519Efj5IYv/Z3K/UF2O5NNoWRfn7iPc4
+818VQH8XJOLeSH6eoz62JqkbhbqWsb5ZiTpWU59jEvve7uK5UhFngHl3Uy9H
+NfbPKOhWp1Hn71jvTT7qu5569li/e4j3dwf717O/hjzk97LCvi1pxN9CfbU0
+gIe3Jb4XaNRhM/tj0MX4TxK879Hg4S3GL+W7UOBjTmD7A7rUyOMLxp+ukXe3
+Im/a9jf6KYXxu/h+iPU+Sf28yvkDxDOcIE7yfwvrozhemdczcGjwlWH+6+gn
+l5OvXQnsM4Xzp+Trgbw86ob6XEJ8HvffRnxP0X9GHIvf4NruoU8qFPrmW239
+B/1K/2rl+JMNGF8vEbdcA/di7n8t9baQ9WoM8Byk3rZSX230z+Xa6sHgW+DR
+F8lXE+MVks8S9n9H3k+hK4U4GwOLx+RV6IC/VupzB/nuZLw1GvXeQH4msJ67
+66DjLz3UaSfxX6wRt4bxjjnAMY98tSXor+RnkUacK9lPveRvaeSX9eD1D/Zz
+J/1qgrL9EvmJibePfrIx4ten37HfLmM9R+vwvd8HTycZvzXPp8ExwvXr2I8r
+yWcL+R9P2fPK1OkF1uf6iA/Ws4r5bWJ/NSnWk37pSuxz3oFvVFPvM9ifOT82
+PJ9zrf+bOCIFnSSp/0KNOPN5vpzg+3n65e4k4jxGP//Gs/4A/0qhPv+yHodd
+y6fhsT2vL/P8XGOfEua/Qdvz0PD6kLZ+Z+L97KAuV3H/0x51pKx+In8xcS5E
+/c/8K1zkc4R6+8inTuN4H0vT71m/xdqeb+b7JYE9P3BvcZB3TKHuD/rgaRrf
+f8mfN0ZnB5L0GerpateeTwbnx/TXWdRvjYN5N7Nf6/P9Ab+ln6WplwTz+YF8
+1dGvtkXnkUe98Tx7MUA9ZsR5P+L9opDr25NYvzfqxwbgO876z02xn+LAVR+A
+pyXM9x/qsZd+eG8a88rIx+oU9n2Y+APuX8b3cdfGM3ovYv59PI8O+YxHfAOO
+9Ruj+yr2Xz/z/dTHuueJ52vqNcV+fc+z5z/63bf+gXubDxyK64dd5LcqjvFl
+zL+b53d1EviyrFcP75uN5Dfr2vuF+e57WNfF8+8rF7j2s7+Oa9TrafpTsfv/
+++x9KcS5VbEPfMx7hXi66BfPsh6zNb5fx/78m/rtYrw7WI+9zP8E76MTGd9L
+WH8z62em2S9RvVPY76hEnV/nfefHCG/a3r/M+9y09Svcp+iH7eT/lIP8JlMf
+Rdr6ucFzjHr4nv1xzhf/AeQpdeI=
+     "]]}, {{}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{63.211875000000006`, 94.50777777777779},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{
+   "OptimizePlotMarkers" -> True, "OptimizePlotMarkers" -> True, 
+    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        Identity[
+         Part[#, 1]], 
+        Identity[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        Identity[
+         Part[#, 1]], 
+        Identity[
+         Part[#, 2]]}& )}},
+  PlotRange->{{63.211875000000006`, 73.9}, {94.50777777777779, 158.96}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.05], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.8317639905692472`*^9},
+ CellLabel->"Out[27]=",ExpressionUUID->"79057bb3-1b4f-4e43-b127-f204686c92f2"]
+}, Open  ]]
+},
+WindowSize->{808, 873},
+WindowMargins->{{219, Automatic}, {19, Automatic}},
+FrontEndVersion->"12.3 for Mac OS X x86 (64-bit) (May 11, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"e0b7f47b-5375-4383-9ffe-c3bad5a04673"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 230, 4, 30, "Input",ExpressionUUID->"f3ac56d4-067c-4d40-8b6f-5d0c8d0f82de"],
+Cell[813, 28, 180, 3, 25, "Echo",ExpressionUUID->"18f917f8-5153-4780-9e7d-73090048e8fa"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1030, 36, 1219, 20, 304, "Input",ExpressionUUID->"352564da-3d77-41bf-99e5-325989bec6de"],
+Cell[2252, 58, 13554, 193, 39, "Output",ExpressionUUID->"45c3e1e9-1ba0-4366-b7ea-108b8eaacc78"]
+}, Open  ]],
+Cell[15821, 254, 5540, 91, 78, "Input",ExpressionUUID->"f356c099-a11a-41e1-94ea-4f0ab3bea7c7"],
+Cell[CellGroupData[{
+Cell[21386, 349, 209, 3, 30, "Input",ExpressionUUID->"cefa1ec8-de28-4f2a-93d5-fb6a184d4b30"],
+Cell[21598, 354, 3184, 67, 237, "Output",ExpressionUUID->"79057bb3-1b4f-4e43-b127-f204686c92f2"]
+}, Open  ]]
+}
+]
+*)
+

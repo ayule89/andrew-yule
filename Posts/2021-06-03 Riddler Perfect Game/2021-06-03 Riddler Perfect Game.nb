@@ -1,0 +1,465 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     19488,        457]
+NotebookOptionsPosition[     17272,        417]
+NotebookOutlinePosition[     17747,        435]
+CellTagsIndexPosition[     17704,        432]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[TextData[StyleBox["On-base percentage for a certain number of perfect \
+games", "Subsubsection"]], "Text",
+ CellChangeTimes->{{3.831216474244205*^9, 3.831216488649901*^9}, {
+  3.831826688932026*^9, 3.8318267175863743`*^9}, {3.831849040314082*^9, 
+  3.831849072356942*^9}},ExpressionUUID->"7473ac0c-3085-4e80-ab8b-\
+fafe7856894e"],
+
+Cell[TextData[{
+ "I always enjoy reading the weekly riddler puzzles from 538 (",
+ ButtonBox["link",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://fivethirtyeight.com/tag/the-riddler"], None},
+  ButtonNote->"https://fivethirtyeight.com/tag/the-riddler"],
+ "). My background is not in statistics, but I enjoy the puzzles because they\
+\[CloseCurlyQuote]re typically just the right amount of complexity to solve \
+in a reasonable time frame and the topics are interesting and wide-ranging. \
+When there is one involving sports, it\[CloseCurlyQuote]s even better.\n\n\
+Here\[CloseCurlyQuote]s the riddler express from June 3rd 2021 discussing \
+baseball perfect games:"
+}], "Text",
+ CellChangeTimes->{{3.8318251224234047`*^9, 3.831825197407246*^9}, 
+   3.8318252364114723`*^9, {3.831825281051396*^9, 3.8318252833666553`*^9}, {
+   3.8318253406561813`*^9, 3.8318254198923388`*^9}, {3.831825495465217*^9, 
+   3.831825495853088*^9}, {3.8318267300293217`*^9, 
+   3.831826734918241*^9}},ExpressionUUID->"a734cc9b-1add-4d1f-8885-\
+b228623f734c"],
+
+Cell[TextData[StyleBox["\[OpenCurlyDoubleQuote]How low would a batter\
+\[CloseCurlyQuote]s chances of reaching base have to be for you to expect one \
+perfect game per season? (You can make the following simplifying assumptions: \
+All batters have the same chances of reaching base; at-bats are independent \
+from each other; there are 30 MLB teams, and each club plays 162 games; and \
+no games go into extra innings.)\[CloseCurlyDoubleQuote]",
+ FontSlant->"Italic"]], "Text",
+ CellChangeTimes->{{3.831825424654402*^9, 
+  3.831825497920841*^9}},ExpressionUUID->"3f026669-79ad-4750-aa42-\
+0d66e340a31c"],
+
+Cell["\<\
+My preferred computational tool is the Wolfram Language so \
+I\[CloseCurlyQuote]ll take a stab at solving this riddler using it. \
+\>", "Text",
+ CellChangeTimes->{{3.8318255582002573`*^9, 
+  3.831825605136585*^9}},ExpressionUUID->"d5a3589a-87af-4948-b373-\
+aba9f1bea993"],
+
+Cell["\<\
+First, let\[CloseCurlyQuote]s define some global constants based on what we \
+are allowed to assume.\
+\>", "Text",
+ CellChangeTimes->{{3.831825622950623*^9, 
+  3.8318256418017893`*^9}},ExpressionUUID->"b961877f-abeb-497d-9b2b-\
+e99cfd74caea"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"gamesPerYear", "=", "162"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"teams", "=", "30"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"numberOfInnings", "=", "9"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"atBatsPerInning", "=", "3"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"atBatsDuringAGame", "=", 
+   RowBox[{"numberOfInnings", "*", "atBatsPerInning"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.831216860343442*^9, 3.831216869497957*^9}, {
+  3.831217594530178*^9, 3.8312176627227383`*^9}, {3.831219405975316*^9, 
+  3.831219413742969*^9}, {3.831219597496853*^9, 3.8312195979481907`*^9}, {
+  3.831220704134701*^9, 3.831220704301762*^9}, {3.831826818043941*^9, 
+  3.831826819456272*^9}, {3.8318271430589457`*^9, 3.831827168266898*^9}},
+ CellLabel->"In[9]:=",ExpressionUUID->"abe04640-14a5-4fc5-8ea6-3066dbcf77d2"],
+
+Cell["\<\
+Now, my preferred approach to a lot of these statistically based riddlers is \
+to just simulate them. The primary reason is because I have very little \
+actual formal training in statistics, but also because I believe that modern \
+computers today combined with powerful computation languages, give us a very \
+good way of solving these problems that previously had to be solved using \
+pure mathematics.
+
+So, we need a way of simulating a baseball season and to start we will need \
+to create a distribution based on the on-base average. In this case, we can \
+use EmpiricalDistribution and assign a weight based on the on-base average. \
+The resulting output will be either a 1 when the batter gets on base, or a 0 \
+when they do not. \
+\>", "Text",
+ CellChangeTimes->{{3.831825645617915*^9, 3.83182581444023*^9}, {
+  3.831826488791648*^9, 3.8318265488246*^9}, {3.831826603305375*^9, 
+  3.8318266417653227`*^9}},ExpressionUUID->"60d485d2-3db6-4aa3-b3e1-\
+7a434e234ebe"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"createDist", "[", "onBasePct_", "]"}], ":=", 
+  RowBox[{"EmpiricalDistribution", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"1", "-", "onBasePct"}], ",", "onBasePct"}], "}"}], "->", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "1"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.831217396945047*^9, 3.831217437723929*^9}, {
+  3.831217473974628*^9, 3.831217494908188*^9}, {3.8312177322340307`*^9, 
+  3.831217733387748*^9}, {3.831220712676042*^9, 3.831220713349863*^9}, {
+  3.831826570175208*^9, 3.8318265836673183`*^9}},
+ CellLabel->"In[14]:=",ExpressionUUID->"3aa1ad72-515e-4743-a947-0ce696521b94"],
+
+Cell["\<\
+Simulating a full season requires us to randomly sample our on-base \
+distribution for the total number of at bats that we can expect for every \
+game played across each team. Then, to ensure we account for randomness \
+correctly, because this is a simulation, we need to repeat this process a \
+number of times. The more we perform a simulation, averaging the results, the \
+better our prediction will be.
+
+RandomVariate lets us sample our distribution a number of times and create \
+nested arrays. In this case we simulate the number of at bats in a game for \
+each team across an entire season 100 times. Then for each simulation we \
+count the number of perfect games we have and take an average across the full \
+number of season simulations.\
+\>", "Text",
+ CellChangeTimes->{{3.831826644576603*^9, 3.8318266620068197`*^9}, {
+  3.831826841243815*^9, 3.8318269117075233`*^9}, {3.831827107781148*^9, 
+  3.831827129982168*^9}, {3.831828303255862*^9, 3.831828356122492*^9}, {
+  3.831828410829151*^9, 3.8318284167824306`*^9}, {3.8318285601828537`*^9, 
+  3.831828566403935*^9}, {3.8318491265307817`*^9, 3.831849178649413*^9}, {
+  3.831849218157386*^9, 
+  3.831849247313651*^9}},ExpressionUUID->"6b2f4463-0ac1-46c3-a4c9-\
+2a3298e94214"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"numberOfSeasonSimulations", "=", "100"}], ";"}]], "Input",
+ CellChangeTimes->{{3.831828959795142*^9, 3.831828960011866*^9}, {
+  3.831848851413063*^9, 3.831848851515698*^9}, {3.831848886528255*^9, 
+  3.8318489034911423`*^9}, {3.8318489463056517`*^9, 3.8318489466933327`*^9}},
+ CellLabel->"In[50]:=",ExpressionUUID->"5fc07d31-b976-481e-bab9-9b16653ccfb0"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"simulateFullSeason", "[", "onBasePct_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"dist", ",", "data", ",", "perfectGameCount"}], "}"}], ",", "\n",
+     "\t", 
+    RowBox[{
+     RowBox[{"dist", "=", 
+      RowBox[{"createDist", "[", "onBasePct", "]"}]}], ";", "\n", "\t", 
+     RowBox[{"data", "=", 
+      RowBox[{"RandomVariate", "[", 
+       RowBox[{
+        RowBox[{"createDist", "[", "onBasePct", "]"}], ",", 
+        RowBox[{"{", "\n", "\t\t", 
+         RowBox[{"numberOfSeasonSimulations", ",", "\n", "\t\t", 
+          RowBox[{"teams", "*", "gamesPerYear"}], ",", "\n", "\t\t", 
+          "atBatsDuringAGame"}], "\n", "\t", "}"}]}], "]"}]}], ";", "\n", 
+     "\t", 
+     RowBox[{"perfectGameCount", "=", 
+      RowBox[{
+       RowBox[{"Map", "[", 
+        RowBox[{"Count", "[", 
+         RowBox[{"x_", "/;", 
+          RowBox[{"AllTrue", "[", 
+           RowBox[{"x", ",", 
+            RowBox[{"EqualTo", "[", "0", "]"}]}], "]"}]}], "]"}], "]"}], "@", 
+       "data"}]}], ";", "\n", "\t", 
+     RowBox[{"N", "@", 
+      RowBox[{"Mean", "[", "perfectGameCount", "]"}]}]}]}], "\n", 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.831218177324462*^9, 3.831218199483288*^9}, {
+   3.831218280365953*^9, 3.8312183464121*^9}, {3.8312184618058043`*^9, 
+   3.831218463558242*^9}, 3.831219129604282*^9, {3.831219168140499*^9, 
+   3.831219216511449*^9}, {3.831219257355295*^9, 3.8312193081223183`*^9}, {
+   3.831219380019499*^9, 3.831219380583194*^9}, {3.831219416520369*^9, 
+   3.8312195004191647`*^9}, {3.831826585688184*^9, 3.8318265890672817`*^9}, {
+   3.831826823452888*^9, 3.831826828973174*^9}, {3.83182718252533*^9, 
+   3.83182721038973*^9}},
+ CellLabel->"In[51]:=",ExpressionUUID->"02b737e1-1b7d-473b-ad7b-7baf9324e8e5"],
+
+Cell["\<\
+Simulating each season multiple times for various on-base averages let\
+\[CloseCurlyQuote]s us see how the number of predicted perfect games in a \
+season varies.\
+\>", "Text",
+ CellChangeTimes->{{3.831828429378913*^9, 3.8318284641376123`*^9}, {
+  3.831828500991735*^9, 
+  3.831828502327669*^9}},ExpressionUUID->"f1dd30b3-0460-4ff5-ac6a-\
+5b1782925116"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"results", "=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"onBasePct", ",", 
+      RowBox[{"simulateFullSeason", "[", "onBasePct", "]"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"onBasePct", ",", "0.1", ",", "0.4", ",", "0.01"}], "}"}]}], 
+   "]"}]}]], "Input",
+ CellChangeTimes->{{3.831219205178244*^9, 3.831219207289546*^9}, 
+   3.831219387446611*^9, {3.8312194582256403`*^9, 3.8312195872822647`*^9}, 
+   3.831220708704554*^9, {3.831281132177842*^9, 3.831281132351038*^9}, {
+   3.831828468633463*^9, 3.83182847904257*^9}, {3.8318288356234217`*^9, 
+   3.831828836094696*^9}, {3.831848949239792*^9, 3.8318489499430323`*^9}},
+ CellLabel->"In[52]:=",ExpressionUUID->"8dedb4c0-2314-4d7f-9fb9-249341081ded"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0.1`", ",", "282.13`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.11`", ",", "209.22`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.12000000000000001`", ",", "154.54`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.13`", ",", "114.1`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.14`", ",", "83.69`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.15000000000000002`", ",", "61.1`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.16`", ",", "44.35`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.17`", ",", "31.48`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.18`", ",", "22.6`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.19`", ",", "16.87`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.2`", ",", "11.67`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.21000000000000002`", ",", "8.46`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.22`", ",", "5.96`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.23`", ",", "4.16`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.24000000000000002`", ",", "2.9`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.25`", ",", "2.34`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.26`", ",", "1.51`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.27`", ",", "0.98`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.28`", ",", "0.64`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.29000000000000004`", ",", "0.49`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.30000000000000004`", ",", "0.33`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.31`", ",", "0.27`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.32`", ",", "0.16`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.33`", ",", "0.06`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.33999999999999997`", ",", "0.07`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.35`", ",", "0.08`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.36`", ",", "0.03`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.37`", ",", "0.03`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.38`", ",", "0.03`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.39`", ",", "0.`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.4`", ",", "0.`"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.831219207769313*^9, 3.831219220989884*^9}, {
+   3.831219262096644*^9, 3.831219288207776*^9}, {3.831219341496863*^9, 
+   3.8312193437085943`*^9}, {3.831219381855809*^9, 3.8312193879310226`*^9}, 
+   3.831219419120912*^9, {3.8312194542853947`*^9, 3.831219506801855*^9}, {
+   3.83121954445815*^9, 3.831219617048911*^9}, 3.831220814448874*^9, 
+   3.831281334377769*^9, 3.831828701655305*^9, 3.8318289564494*^9, 
+   3.831828998542981*^9, 3.8318488608880377`*^9, {3.8318488966682034`*^9, 
+   3.831848922713575*^9}, 3.831848984106646*^9},
+ CellLabel->"Out[52]=",ExpressionUUID->"f3a42686-a3e8-49d2-b1e2-2e8ae4d4d9a6"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListLinePlot", "[", "\n", "\t", 
+  RowBox[{"results", ",", "\n", "\t", 
+   RowBox[{"AxesLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<League On-Base Average\>\"", ",", 
+      "\"\<Predicted Number of\\nPerfect Games in a Season\>\""}], "}"}]}], 
+   ",", "\n", "\t", 
+   RowBox[{"ImageSize", "\[Rule]", "500"}]}], "\n", "]"}]], "Input",
+ CellChangeTimes->{{3.831219544821175*^9, 3.831219547332685*^9}, {
+  3.831281351709875*^9, 3.831281405019698*^9}, {3.8312814370182047`*^9, 
+  3.8312816535202017`*^9}, {3.831281683932616*^9, 3.831281796620224*^9}, {
+  3.831281839553587*^9, 3.831281967453659*^9}, {3.8313039992372913`*^9, 
+  3.831304019144421*^9}, {3.83182864310788*^9, 3.831828667625095*^9}, {
+  3.8318287581032877`*^9, 3.831828763897078*^9}, {3.8318288237278767`*^9, 
+  3.831828826644434*^9}},
+ CellLabel->"In[53]:=",ExpressionUUID->"dd94e2e3-bc79-4ff5-87c7-b5dcddd44327"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {{}, {}, 
+    {RGBColor[0.368417, 0.506779, 0.709798], PointSize[
+      NCache[
+       Rational[7, 360], 0.019444444444444445`]], AbsoluteThickness[1.6], 
+     LineBox[CompressedData["
+1:eJxTTMoPSmViYGCQB2IQPWsmCOy0X+f+sEpkUaGDZkz/oa8ae+yvLy6w5VLP
+ctgp1/o6cMc+e6DsOvfAZIclQOHriw/Yp4FAW4zDm8AdQBUH7cHa3oQ4mBiD
+wGH7s2eAoMfPoVoEZPIRCF/HzeHwVw2g0qP2EHF7By6wRcftIe4wcwgCGRd4
+wl4eZO09AweI+EmIe8LVHR6B3PHwlD3EXgWoe89A5K+LOxSCnFdw1h7iTgGo
++8/Zg51lzO7AAAYX7MHW7GCC+ueCPcScH/YeYI9ehPgn5j3UnotQ9z6xnwAS
+7r8Elb9vD/HvZYh75a5C3XEZbg5E3xV7WDjA1EHsX2cPNu7QVag9GyHhmnYN
+qn6LPSR8rkPVz4PE0zoEHxJeN+D8byDjvt6wZ4ACSPjdhPMBA5DowQ==
+      
+      "]]}}, {{}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{
+    FormBox["\"League On-Base Average\"", TraditionalForm], 
+    FormBox[
+    "\"Predicted Number of\\nPerfect Games in a Season\"", TraditionalForm]},
+  AxesOrigin->{0.09375000000000022, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImageSize->500,
+  Method->{
+   "OptimizePlotMarkers" -> True, "OptimizePlotMarkers" -> True, 
+    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        Identity[
+         Part[#, 1]], 
+        Identity[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        Identity[
+         Part[#, 1]], 
+        Identity[
+         Part[#, 2]]}& )}},
+  PlotRange->{{0.09375000000000022, 0.4}, {0, 282.13}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{{3.831828819792651*^9, 3.831828827118931*^9}, {
+   3.8318290031858664`*^9, 3.831829017505376*^9}, {3.831848872039398*^9, 
+   3.8318489227912827`*^9}, 3.8318489841684237`*^9},
+ CellLabel->"Out[53]=",ExpressionUUID->"7996715c-fa81-45fe-a44a-60324551b459"]
+}, Open  ]],
+
+Cell["\<\
+And finally, using the results we can calculate the required on-base average \
+that would lead to one perfect game per season\
+\>", "Text",
+ CellChangeTimes->{{3.8318286697538853`*^9, 3.831828692865769*^9}, {
+  3.8318291512459106`*^9, 
+  3.83182916775429*^9}},ExpressionUUID->"c83daa44-bb42-4183-a7f8-\
+c48154366aa7"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FindRoot", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"Interpolation", "[", "results", "]"}], "[", "onBasePct", "]"}], 
+    "==", "1"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"onBasePct", ",", "0.2"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.831829099374168*^9, 3.831829144381033*^9}, {
+  3.831848881158925*^9, 3.831848881296821*^9}, {3.831848929650405*^9, 
+  3.831848934499971*^9}},
+ CellLabel->"In[54]:=",ExpressionUUID->"d54888ef-cd44-4328-8185-d9d54272dabb"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"onBasePct", "\[Rule]", "0.269622641509434`"}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.83182911435319*^9, 3.831829145141471*^9, {3.831848874340734*^9, 
+   3.8318489305004883`*^9}, 3.831848984233797*^9},
+ CellLabel->"Out[54]=",ExpressionUUID->"c895e03a-546f-4318-a25b-ef3241645c60"]
+}, Open  ]]
+},
+WindowSize->{1135, 833},
+WindowMargins->{{92, Automatic}, {42, Automatic}},
+TaggingRules->Association["TryRealOnly" -> False],
+Magnification:>1.25 Inherited,
+FrontEndVersion->"12.3 for Mac OS X x86 (64-bit) (May 11, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"312c8db5-8f83-4c4d-b44b-99a7f93a4800"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 334, 5, 50, "Text",ExpressionUUID->"7473ac0c-3085-4e80-ab8b-fafe7856894e"],
+Cell[895, 27, 1047, 19, 159, "Text",ExpressionUUID->"a734cc9b-1add-4d1f-8885-b228623f734c"],
+Cell[1945, 48, 603, 9, 102, "Text",ExpressionUUID->"3f026669-79ad-4750-aa42-0d66e340a31c"],
+Cell[2551, 59, 281, 6, 44, "Text",ExpressionUUID->"d5a3589a-87af-4948-b373-aba9f1bea993"],
+Cell[2835, 67, 252, 6, 44, "Text",ExpressionUUID->"b961877f-abeb-497d-9b2b-e99cfd74caea"],
+Cell[3090, 75, 825, 17, 142, "Input",ExpressionUUID->"abe04640-14a5-4fc5-8ea6-3066dbcf77d2"],
+Cell[3918, 94, 981, 17, 246, "Text",ExpressionUUID->"60d485d2-3db6-4aa3-b3e1-7a434e234ebe"],
+Cell[4902, 113, 656, 14, 37, "Input",ExpressionUUID->"3aa1ad72-515e-4743-a947-0ce696521b94"],
+Cell[5561, 129, 1244, 21, 246, "Text",ExpressionUUID->"6b2f4463-0ac1-46c3-a4c9-2a3298e94214"],
+Cell[6808, 152, 388, 6, 37, "Input",ExpressionUUID->"5fc07d31-b976-481e-bab9-9b16653ccfb0"],
+Cell[7199, 160, 1798, 40, 272, "Input",ExpressionUUID->"02b737e1-1b7d-473b-ad7b-7baf9324e8e5"],
+Cell[9000, 202, 363, 8, 73, "Text",ExpressionUUID->"f1dd30b3-0460-4ff5-ac6a-5b1782925116"],
+Cell[CellGroupData[{
+Cell[9388, 214, 759, 15, 37, "Input",ExpressionUUID->"8dedb4c0-2314-4d7f-9fb9-249341081ded"],
+Cell[10150, 231, 2871, 73, 147, "Output",ExpressionUUID->"f3a42686-a3e8-49d2-b1e2-2e8ae4d4d9a6"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13058, 309, 915, 17, 142, "Input",ExpressionUUID->"dd94e2e3-bc79-4ff5-87c7-b5dcddd44327"],
+Cell[13976, 328, 2084, 52, 324, "Output",ExpressionUUID->"7996715c-fa81-45fe-a44a-60324551b459"]
+}, Open  ]],
+Cell[16075, 383, 327, 7, 43, "Text",ExpressionUUID->"c83daa44-bb42-4183-a7f8-c48154366aa7"],
+Cell[CellGroupData[{
+Cell[16427, 394, 503, 12, 37, "Input",ExpressionUUID->"d54888ef-cd44-4328-8185-d9d54272dabb"],
+Cell[16933, 408, 323, 6, 42, "Output",ExpressionUUID->"c895e03a-546f-4318-a25b-ef3241645c60"]
+}, Open  ]]
+}
+]
+*)
+
