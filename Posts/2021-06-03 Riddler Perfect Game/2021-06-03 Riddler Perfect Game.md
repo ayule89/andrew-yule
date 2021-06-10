@@ -1,6 +1,6 @@
 # On-base percentage for a certain number of perfect games
 
-I always enjoy reading the weekly riddler puzzles from 538 (link). My background is not in statistics, but I enjoy the puzzles because they're typically just the right amount of complexity to solve in a reasonable time frame and the topics are interesting and wide-ranging. When there is one involving sports, it's even better.
+I always enjoy reading the weekly riddler puzzles from 538 ([link](https://fivethirtyeight.com/tag/the-riddler/)). My background is not in statistics, but I enjoy the puzzles because they're typically just the right amount of complexity to solve in a reasonable time frame and the topics are interesting and wide-ranging. When there is one involving sports, it's even better.
 
 Here's the riddler express from June 3rd 2021 discussing baseball perfect games:
 
