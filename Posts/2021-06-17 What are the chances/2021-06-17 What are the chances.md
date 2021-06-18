@@ -1,5 +1,5 @@
 # What are the chances: Simulating daughters and sons in my wife and I’s friend group
-My wife and I have two beautiful girls. Ironically, between us and my wives 3 closest friends, the number of girls we have is 7 while the number of boys is just 1. We were causally talking the other day about how rare that seemed, so I figured I’d find out just how rare it actually is.
+My wife and I have two beautiful girls. Ironically, between us and my wives 3 closest friends, the number of girls we have is 7 while the number of boys is just 1. We were casually talking the other day about how rare that seemed, so I figured I’d find out just how rare it actually is.
 I’ll start first by simulating this because I enjoy simulating statistical problems and later we can solve it analytically.
 
 First, create a distribution to give us an equally weighted boy or girl (we’ll come back to this assumption later).
