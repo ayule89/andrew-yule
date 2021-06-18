@@ -13,3 +13,5 @@
 	2. Testing your functions using symbolic means
 10. Shortcomings in Predict (SCM from AFS example)
 11. Nice features in v12.3
+12. 5 lines of code to convince you to use wolfram language
+13. Probability of wife and friends have xx many girls and 1 boy
