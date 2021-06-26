@@ -1,0 +1,348 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     13063,        340]
+NotebookOptionsPosition[     10963,        299]
+NotebookOutlinePosition[     11355,        315]
+CellTagsIndexPosition[     11312,        312]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["\<\
+Riddler solitaire: Optimal strategy for when to hang up the cards\
+\>", "Subsection",
+ CellChangeTimes->{{3.833630311727028*^9, 
+  3.833630345940531*^9}},ExpressionUUID->"fd84b4a5-5a65-4e15-ae86-\
+a2a804aa924c"],
+
+Cell["\<\
+This week\[CloseCurlyQuote]s riddler was too interesting to pass up:
+
+\[OpenCurlyDoubleQuote]Riddler solitaire is played with 11 cards: an ace, a \
+two, a three, a four, a five, a six, a seven, an eight, a nine, a 10 and a \
+joker. Each card is worth its face value in points, while the ace counts for \
+1 point. To play a game, you shuffle the cards so they are randomly ordered, \
+and then turn them over one by one. You start with 0 points, and as you flip \
+over each card your score increases by that card\[CloseCurlyQuote]s points \
+\[LongDash] as long as the joker hasn\[CloseCurlyQuote]t shown up. The moment \
+the joker appears, the game is over and your score is 0. The key is that you \
+can stop any moment and walk away with a nonzero score.
+
+What strategy maximizes your expected number of points?\
+\[CloseCurlyDoubleQuote]\
+\>", "Text",
+ CellChangeTimes->{{3.833630340279896*^9, 
+  3.833630371362576*^9}},ExpressionUUID->"dc721957-b04f-43e1-8a79-\
+bcbe61057085"],
+
+Cell["\<\
+As always, I like to solve these kinds of problems using simulation because \
+it shows just how powerful computational approaches can be.
+
+Let\[CloseCurlyQuote]s start first by creating the deck of cards and then we\
+\[CloseCurlyQuote]ll run a bunch of \[OpenCurlyDoubleQuote]simulations\
+\[CloseCurlyDoubleQuote] by taking a random order of the cards many times.\
+\>", "Text",
+ CellChangeTimes->{{3.8336316611357517`*^9, 3.833631680461199*^9}, {
+  3.833698158952325*^9, 
+  3.833698235300211*^9}},ExpressionUUID->"aa917de3-9304-4444-94d5-\
+b3a49f9568c0"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"  ", 
+  RowBox[{"cards", "=", 
+   RowBox[{"Join", "[", 
+    RowBox[{
+     RowBox[{"Range", "[", 
+      RowBox[{"1", ",", "10"}], "]"}], ",", 
+     RowBox[{"{", "\"\<J\>\"", "}"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.833630440579556*^9, 3.83363051051746*^9}},
+ CellLabel->"In[30]:=",ExpressionUUID->"9a25a314-6b62-4f06-ad91-2c74fd9f6d84"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1", ",", "2", ",", "3", ",", "4", ",", "5", ",", "6", ",", "7", ",", "8", 
+   ",", "9", ",", "10", ",", "\<\"J\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{3.8336305112489233`*^9},
+ CellLabel->"Out[30]=",ExpressionUUID->"f944d65c-87a9-4e38-8f51-b31ec081b16b"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"simulations", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"RandomSample", "[", "cards", "]"}], ",", 
+     RowBox[{"{", "20000", "}"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.833630534171399*^9, 3.833630549965724*^9}, 
+   3.8336309918961353`*^9, {3.83363102998839*^9, 3.833631030255005*^9}, {
+   3.833631122395235*^9, 3.833631122506412*^9}, {3.833631436153119*^9, 
+   3.833631452105714*^9}, {3.833631516726219*^9, 3.833631516881757*^9}},
+ CellLabel->"In[84]:=",ExpressionUUID->"c77c964b-7d19-416a-ac14-d6c7d5f48528"],
+
+Cell["\<\
+Next, let\[CloseCurlyQuote]s create a helper function to count of score for \
+the given hand assuming we were to stop at anywhere from 1 - 11, noting \
+however, that if we hit a \[OpenCurlyDoubleQuote]J\[CloseCurlyDoubleQuote] in \
+one of our hands, we will then get a 0 score for that hand and number of \
+cards combination.\
+\>", "Text",
+ CellChangeTimes->{{3.8336982388238707`*^9, 
+  3.833698313240912*^9}},ExpressionUUID->"20f1e439-db2e-44a6-96c5-\
+0c9d3c194526"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"scoreCounter", "[", "sim_", "]"}], ":=", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"hand", "->", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"ContainsAny", "[", 
+        RowBox[{
+         RowBox[{"sim", "[", 
+          RowBox[{"[", 
+           RowBox[{"1", ";;", "hand"}], "]"}], "]"}], ",", 
+         RowBox[{"{", "\"\<J\>\"", "}"}]}], "]"}], ",", "0", ",", 
+       RowBox[{"Total", "[", 
+        RowBox[{"sim", "[", 
+         RowBox[{"[", 
+          RowBox[{"1", ";;", "hand"}], "]"}], "]"}], "]"}]}], "]"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"hand", ",", 
+      RowBox[{"Length", "[", "cards", "]"}]}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.833631265967944*^9, 3.833631395547845*^9}, {
+  3.8336982620122423`*^9, 3.833698264297874*^9}},
+ CellLabel->"In[99]:=",ExpressionUUID->"5b97bf16-c523-4bb4-8479-3f4e9b5335e8"],
+
+Cell["\<\
+Next, apply our helper function to the simulations and merge the results for \
+the various number of cards dealt taking the average score.\
+\>", "Text",
+ CellChangeTimes->{{3.8336983164698753`*^9, 3.83369833165272*^9}, {
+  3.833698495910757*^9, 
+  3.83369850934111*^9}},ExpressionUUID->"d9714418-131b-4a36-8c46-\
+d755ec33a1b6"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"scores", "=", 
+   RowBox[{"scoreCounter", "/@", "simulations"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.833631404872349*^9, 3.833631425067566*^9}, {
+  3.8336314624353456`*^9, 3.8336314727177362`*^9}},
+ CellLabel->
+  "In[100]:=",ExpressionUUID->"1e691fa6-dc7e-4bc9-8a72-87e6f97f3bb3"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"combinedScores", "=", 
+  RowBox[{"N", "@", 
+   RowBox[{
+    RowBox[{"KeyValueMap", "[", 
+     RowBox[{
+      RowBox[{"{", "##", "}"}], "&"}], "]"}], "@", 
+    RowBox[{"Merge", "[", 
+     RowBox[{"scores", ",", "Mean"}], "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.833631479796824*^9, 3.8336314863860893`*^9}, {
+   3.8336315700938597`*^9, 3.833631587060502*^9}, 3.83369835169771*^9, {
+   3.833698392134926*^9, 3.83369839481789*^9}},
+ CellLabel->
+  "In[104]:=",ExpressionUUID->"3199ef33-760c-4c00-8d16-e6b288ad8f42"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1.`", ",", "4.97965`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2.`", ",", "8.99795`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3.`", ",", "11.9973`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4.`", ",", "14.12595`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5.`", ",", "15.11565`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"6.`", ",", "15.0792`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"7.`", ",", "13.9603`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"8.`", ",", "11.9681`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"9.`", ",", "8.98645`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"10.`", ",", "4.93075`"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"11.`", ",", "0.`"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.8336314905699244`*^9, 3.833631529966997*^9, {3.8336315806903057`*^9, 
+   3.8336315956339207`*^9}, 3.8336983607489367`*^9, 3.8336984038343153`*^9},
+ CellLabel->
+  "Out[104]=",ExpressionUUID->"df53b1dd-823d-4252-8cd2-7fb0269c112e"]
+}, Open  ]],
+
+Cell["\<\
+We know this is an optimization function of some kind so we should be able to \
+see some kind of global maximum in our results.\
+\>", "Text",
+ CellChangeTimes->{{3.833698401728299*^9, 
+  3.833698421441901*^9}},ExpressionUUID->"c3292afa-ed02-4352-979a-\
+3a214b208d7d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ListLinePlot", "[", 
+  RowBox[{"combinedScores", ",", 
+   RowBox[{"AxesLabel", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<Number of cards flipped\>\"", ",", "\"\<Average score\>\""}], 
+     "}"}]}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "500"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.833630787623899*^9, 3.8336307898853073`*^9}, {
+  3.8336314949765368`*^9, 3.8336314983797293`*^9}, {3.8336317105251503`*^9, 
+  3.833631734422071*^9}},
+ CellLabel->"In[97]:=",ExpressionUUID->"a4a18c18-f7c1-4692-baf0-fe871d4549c3"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {{}, {}, 
+    {RGBColor[0.368417, 0.506779, 0.709798], PointSize[
+      NCache[
+       Rational[7, 360], 0.019444444444444445`]], AbsoluteThickness[1.6], 
+     LineBox[{{1., 4.97965}, {2., 8.99795}, {3., 11.9973}, {4., 14.12595}, {
+      5., 15.11565}, {6., 15.0792}, {7., 13.9603}, {8., 11.9681}, {9., 
+      8.98645}, {10., 4.93075}, {11., 0.}}]}}, {{}, {}}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{
+    FormBox["\"Number of cards flipped\"", TraditionalForm], 
+    FormBox["\"Average score\"", TraditionalForm]},
+  AxesOrigin->{0.7916666666666667, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImageSize->500,
+  Method->{
+   "OptimizePlotMarkers" -> True, "OptimizePlotMarkers" -> True, 
+    "CoordinatesToolOptions" -> {"DisplayFunction" -> ({
+        Identity[
+         Part[#, 1]], 
+        Identity[
+         Part[#, 2]]}& ), "CopiedValueFunction" -> ({
+        Identity[
+         Part[#, 1]], 
+        Identity[
+         Part[#, 2]]}& )}},
+  PlotRange->{{0.7916666666666667, 11.}, {0, 15.11565}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{
+  3.833630790208384*^9, 3.8336310016065083`*^9, 3.833631035552597*^9, {
+   3.833631427942931*^9, 3.833631448730173*^9}, {3.833631491812399*^9, 
+   3.8336314985974007`*^9}, {3.833631530030648*^9, 3.833631537635624*^9}, 
+   3.833631595699246*^9, {3.8336317290915194`*^9, 3.833631734786767*^9}},
+ CellLabel->"Out[97]=",ExpressionUUID->"64226d5e-4327-42d0-b21e-368b33748f55"]
+}, Open  ]],
+
+Cell["\<\
+And finally, let\[CloseCurlyQuote]s determine which hand is the optimal one \
+to call it quits for which for this game is at 5 hands with an average likely \
+score somewhere around 15.\
+\>", "Text",
+ CellChangeTimes->{{3.833698425183648*^9, 
+  3.83369846770275*^9}},ExpressionUUID->"c693e043-546f-4b9f-8bce-\
+b87ed8d0eaa6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"combinedScores", "//", 
+  RowBox[{"MaximalBy", "[", "Last", "]"}]}]], "Input",
+ CellChangeTimes->{{3.833631589071774*^9, 3.833631594601913*^9}},
+ CellLabel->"In[98]:=",ExpressionUUID->"cff6783a-0808-4366-acad-e69a9554c52b"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{"5.`", ",", "15.11565`"}], "}"}], "}"}]], "Output",
+ CellChangeTimes->{3.833631595815815*^9, 3.833631736789844*^9},
+ CellLabel->"Out[98]=",ExpressionUUID->"8d80e4c4-ad98-4fb0-bbae-d73185870a52"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 873},
+WindowMargins->{{27, Automatic}, {25, Automatic}},
+FrontEndVersion->"12.3 for Mac OS X x86 (64-bit) (May 11, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"ec4cd652-8b5a-4f76-b013-04a05fffb6e2"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 221, 5, 54, "Subsection",ExpressionUUID->"fd84b4a5-5a65-4e15-ae86-a2a804aa924c"],
+Cell[804, 29, 986, 18, 242, "Text",ExpressionUUID->"dc721957-b04f-43e1-8a79-bcbe61057085"],
+Cell[1793, 49, 564, 11, 127, "Text",ExpressionUUID->"aa917de3-9304-4444-94d5-b3a49f9568c0"],
+Cell[CellGroupData[{
+Cell[2382, 64, 370, 9, 30, "Input",ExpressionUUID->"9a25a314-6b62-4f06-ad91-2c74fd9f6d84"],
+Cell[2755, 75, 302, 6, 34, "Output",ExpressionUUID->"f944d65c-87a9-4e38-8f51-b31ec081b16b"]
+}, Open  ]],
+Cell[3072, 84, 575, 11, 30, "Input",ExpressionUUID->"c77c964b-7d19-416a-ac14-d6c7d5f48528"],
+Cell[3650, 97, 477, 9, 81, "Text",ExpressionUUID->"20f1e439-db2e-44a6-96c5-0c9d3c194526"],
+Cell[4130, 108, 889, 23, 73, "Input",ExpressionUUID->"5b97bf16-c523-4bb4-8479-3f4e9b5335e8"],
+Cell[5022, 133, 337, 7, 58, "Text",ExpressionUUID->"d9714418-131b-4a36-8c46-d755ec33a1b6"],
+Cell[5362, 142, 320, 7, 30, "Input",ExpressionUUID->"1e691fa6-dc7e-4bc9-8a72-87e6f97f3bb3"],
+Cell[CellGroupData[{
+Cell[5707, 153, 539, 13, 30, "Input",ExpressionUUID->"3199ef33-760c-4c00-8d16-e6b288ad8f42"],
+Cell[6249, 168, 1054, 29, 56, "Output",ExpressionUUID->"df53b1dd-823d-4252-8cd2-7fb0269c112e"]
+}, Open  ]],
+Cell[7318, 200, 277, 6, 58, "Text",ExpressionUUID->"c3292afa-ed02-4352-979a-3a214b208d7d"],
+Cell[CellGroupData[{
+Cell[7620, 210, 553, 12, 52, "Input",ExpressionUUID->"a4a18c18-f7c1-4692-baf0-fe871d4549c3"],
+Cell[8176, 224, 1886, 46, 271, "Output",ExpressionUUID->"64226d5e-4327-42d0-b21e-368b33748f55"]
+}, Open  ]],
+Cell[10077, 273, 333, 7, 58, "Text",ExpressionUUID->"c693e043-546f-4b9f-8bce-b87ed8d0eaa6"],
+Cell[CellGroupData[{
+Cell[10435, 284, 247, 4, 30, "Input",ExpressionUUID->"cff6783a-0808-4366-acad-e69a9554c52b"],
+Cell[10685, 290, 250, 5, 34, "Output",ExpressionUUID->"8d80e4c4-ad98-4fb0-bbae-d73185870a52"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
